@@ -1,7 +1,8 @@
 package com.eipteam.healthsafe;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
@@ -9,14 +10,18 @@ import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.provider.Settings;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
 import com.eipteam.healthsafe.nfc_manager.nfc_utils.NfcFunctions;
 
-public class NFCConnect extends Activity {
+import java.util.HashMap;
 
+public class NFCConnectPC extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
+    private String[] keys;
+    private HashMap<String, String> map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,8 @@ public class NFCConnect extends Activity {
         setContentView(R.layout.activity_nfc_connect);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        keys = getResources().getStringArray(R.array.medical_informations);
 
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
@@ -52,8 +59,7 @@ public class NFCConnect extends Activity {
 
         IntentFilter[] exchangeFilters = new IntentFilter[] { ndefDetected };
 
-        if (nfcAdapter != null)
-            nfcAdapter.enableForegroundDispatch(this, pendingIntent, exchangeFilters, null);
+        nfcAdapter.enableForegroundDispatch(this, pendingIntent, exchangeFilters, null);
     }
 
     private void showWirelessSettings() {
@@ -81,17 +87,40 @@ public class NFCConnect extends Activity {
     }
 
     private void displayMsgs(NdefRecord raw) {
-        String msg = new String(raw.getPayload());
+        final String msg = new String(raw.getPayload());
 
-        Intent intent = new Intent(this, MedicalStats.class);
+        if (!NfcFunctions.checkData(keys, msg))  {
+            Intent tmpIntent = new Intent(this, TransferData.class);
+
+            tmpIntent.putExtra("Infos", "NULL");
+            TransferData.error(this, "Not good format.");
+
+            map = new HashMap<>();
+            for (String s : getResources().getStringArray(R.array.medical_informations)) {
+                map.put(s, "N/A");
+            }
+
+            startActivity(tmpIntent);
+        } else {
+            new AlertDialog.Builder(this).setTitle("HealthSafe").setMessage("Do you want to send informations ?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sendInfo(msg);
+                        }
+                    }).setNegativeButton("No", null).show();
+        }
+    }
+
+    private void sendInfo(String msg){
+        Intent intent = new Intent(this, InfoSended.class);
 
         intent.putExtra("data", msg);
 
         startActivity(intent);
     }
 
-    public void retour(View view)
-    {
+    public void retour(View view) {
         finish();
     }
 }
