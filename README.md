@@ -1,7 +1,7 @@
 # HealthSafe_mobile
 Mobile part of the Epitech Innovative Project HealthSafe
 
-_Continous Integration tests_ :
+**Continous Integration tests** :
 
 | Travis CI (develop) | Travis CI (master)  |       Codacy        |           LGTM      |
 |---------------------|---------------------|---------------------|---------------------|
