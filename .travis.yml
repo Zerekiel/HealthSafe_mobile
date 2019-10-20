@@ -18,7 +18,7 @@ android:
   licenses:
     - '.+'
 
-  sudo: required
+  sudo: false
 
   jdk:
     - oraclejdk8
@@ -32,6 +32,10 @@ android:
 #    - ./codacy-coverage-reporter report -l Java -r ./app/build/reports/coverage/debug/report.xml
 
   before_install:
+    - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+    - emulator -avd test -no-skin -no-audio -no-window &
+    - android-wait-for-emulator
+    - adb shell input keyevent 82 &
     - pip install --user codecov
   after_success:
 #    - codecov
