@@ -1,21 +1,20 @@
+#notifications:
+#  slack: healthsafe:yjWOO4vhSSuvJ4g9ehyYXyxF
 
-notifications:
-  slack: healthsafe:yjWOO4vhSSuvJ4g9ehyYXyxF
-
-    - language: android
-      android:
-        update_sdk: true
-        components:
-          - tools
-          - build-tools-24.0.1
-          - android-24
-          - platform-tools
-          - extra-android-support # because I'm use support library
-          - extra-android-m2repository # because I'm use support library
-          - $ANDROID_TARGET
-          - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
-        licenses:
-          - '.+'
+language: android
+  android:
+    update_sdk: true
+      components:
+        - tools
+        - build-tools-24.0.1
+        - android-24
+        - platform-tools
+        - extra-android-support # because I'm use support library
+        - extra-android-m2repository # because I'm use support library
+        - $ANDROID_TARGET
+        - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
+      licenses:
+        - '.+'
 
       sudo: required
 
