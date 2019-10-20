@@ -3,11 +3,12 @@ package com.eipteam.healthsafe;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.eipteam.healthsafe.network.MyJSONReq;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,15 +17,13 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class  MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private Integer code = -2;
+    private String msg = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,41 +53,32 @@ public class  MainActivity extends AppCompatActivity {
 
         while (code == -2);
 
-        if (code == 200 || (id1.equals("deprost") && id2.equals("password"))) {
+        if (code == 200 || ("deprost".equals(id1) && "password".equals(id2))) {
             startActivity(intent);
         }
         else {
-            errorMsg(getApplicationContext(), "WRONG ID OR PASSWD");
+            Toast.makeText(this, code + " " + msg, Toast.LENGTH_SHORT).show();
         }
     }
 
     public void postRequest(String login, String pass) throws IOException {
-        String url = "http://10.0.2.2:3000/mobile";
-
-        MediaType MEDIA_TYPE = MediaType.parse("application/json");
         OkHttpClient client = new OkHttpClient();
 
         JSONObject postData = new JSONObject();
         try {
-            postData.put("nom", login);
-            postData.put("ville", pass);
+            postData.put("userName", login);
+            postData.put("password", pass);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        RequestBody body = RequestBody.create(MEDIA_TYPE, postData.toString());
+        String url = getResources().getString(R.string.connection);
 
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+        client.newCall(new MyJSONReq().postRequest(url, postData)).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 code = -1;
+                msg = e.getMessage();
             }
 
             @Override

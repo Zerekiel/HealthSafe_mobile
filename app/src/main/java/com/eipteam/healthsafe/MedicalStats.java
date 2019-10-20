@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.eipteam.healthsafe.nfc_manager.nfc_utils.NfcFunctions;
 import com.eipteam.healthsafe.nfc_manager.display.Element;
 import com.eipteam.healthsafe.nfc_manager.display.ListElementAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class MedicalStats extends AppCompatActivity {
@@ -36,7 +36,7 @@ public class MedicalStats extends AppCompatActivity {
         Intent intent = getIntent();
         String datas = intent.getStringExtra("data");
 
-        if (!checkData(datas)) {
+        if (!NfcFunctions.checkData(keys, datas)) {
             Intent tmpIntent = new Intent(this, TransferData.class);
 
             tmpIntent.putExtra("Infos", "NULL");
@@ -49,7 +49,7 @@ public class MedicalStats extends AppCompatActivity {
 
             startActivity(tmpIntent);
         } else
-            map = TransferData.stringToMap(datas);
+            map = NfcFunctions.stringToMap(datas);
 
         defaultMap = map;
 
@@ -89,7 +89,7 @@ public class MedicalStats extends AppCompatActivity {
 
         Intent intent = new Intent(this, TransferData.class);
 
-        intent.putExtra("Infos", TransferData.mapToString(map));
+        intent.putExtra("Infos", NfcFunctions.mapToString(map));
 
         startActivity(intent);
     }
@@ -100,25 +100,5 @@ public class MedicalStats extends AppCompatActivity {
                 return keys[i];
         }
         return "This is not a key (too bad).";
-    }
-
-    private boolean checkData(String datas) {
-        if (!datas.contains("\n"))
-            return false;
-
-        String[] records = datas.split("\n");
-
-        ArrayList<String> tmp = new ArrayList<>();
-
-        tmp.addAll(Arrays.asList(keys));
-
-        for (String rec : records) {
-            if (!rec.contains(":"))
-                return false;
-            if (!tmp.contains(rec.split(":")[0]))
-                return false;
-        }
-
-        return true;
     }
 }
