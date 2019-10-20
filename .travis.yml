@@ -27,12 +27,12 @@ android:
 
 
   script:
-    - ./gradlew testDebugUnitTest
-    - ./gradlew createDebugCoverageReport
+#    - ./gradlew testDebugUnitTest
+#    - ./gradlew createDebugCoverageReport
 #    - ./codacy-coverage-reporter report -l Java -r ./app/build/reports/coverage/debug/report.xml
 
   before_install:
     - pip install --user codecov
   after_success:
-    - codecov
-    - bash <(curl -s https://codecov.io/bash)
+#    - codecov
+#    - bash <(curl -s https://codecov.io/bash)
