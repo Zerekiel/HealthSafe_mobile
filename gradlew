@@ -7,6 +7,7 @@
 ##############################################################################
 
 #accept licenses
+yes | $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-28"
 yes | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;28.0.3"
 
 # Attempt to set APP_HOME
