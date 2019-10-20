@@ -6,6 +6,9 @@
 ##
 ##############################################################################
 
+#accept licenses
+yes | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;28.0.3"
+
 # Attempt to set APP_HOME
 # Resolve links: $0 may be a link
 PRG="$0"
