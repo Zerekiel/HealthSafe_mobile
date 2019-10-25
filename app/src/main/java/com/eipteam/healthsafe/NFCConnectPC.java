@@ -21,7 +21,6 @@ import java.util.HashMap;
 public class NFCConnectPC extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     private String[] keys;
-    private HashMap<String, String> map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,6 @@ public class NFCConnectPC extends AppCompatActivity {
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
             finish();
-            return ;
         }
     }
 
@@ -55,7 +53,7 @@ public class NFCConnectPC extends AppCompatActivity {
 
         try {
             ndefDetected.addDataType("text/plain");
-        } catch (IntentFilter.MalformedMimeTypeException e) { }
+        } catch (IntentFilter.MalformedMimeTypeException ignored) { }
 
         IntentFilter[] exchangeFilters = new IntentFilter[] { ndefDetected };
 
@@ -79,6 +77,7 @@ public class NFCConnectPC extends AppCompatActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
             NdefMessage[] msgs = NfcFunctions.getNdefMessages(intent);
 
@@ -95,7 +94,7 @@ public class NFCConnectPC extends AppCompatActivity {
             tmpIntent.putExtra("Infos", "NULL");
             TransferData.error(this, "Not good format.");
 
-            map = new HashMap<>();
+            HashMap<String, String> map = new HashMap<>();
             for (String s : getResources().getStringArray(R.array.medical_informations)) {
                 map.put(s, "N/A");
             }

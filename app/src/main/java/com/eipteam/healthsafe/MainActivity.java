@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, ChooseDisplay.class);
 
-        EditText identifiant = (EditText) findViewById(R.id.identifiant);
+        EditText identifiant = findViewById(R.id.identifiant);
         String id1 = identifiant.getText().toString();
 
-        EditText password = (EditText) findViewById(R.id.password);
+        EditText password = findViewById(R.id.password);
         String id2 = password.getText().toString();
 
         try {
@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         while (code == -2);
 
         if (code == 200 || ("deprost".equals(id1) && "password".equals(id2))) {
+            identifiant.setText("");
+            password.setText("");
+            //Toast.makeText(this, code + " -> " + msg, Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }
         else {
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void postRequest(String login, String pass) throws IOException {
+    private void postRequest(String login, String pass) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         JSONObject postData = new JSONObject();
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 code = response.code();
             }
         });

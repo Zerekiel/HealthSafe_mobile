@@ -9,19 +9,17 @@
     tools:context=".MedicalStats">
 
     <TextView
-        android:id="@+id/TInformation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:textAlignment="center"
-        android:text="Infos médicales"
+        android:text="@string/T_MedicalStats"
         android:textColor="@android:color/black"
         android:textSize="25sp"
         android:textStyle="bold"
         android:typeface="sans" />
 
     <LinearLayout
-        android:id="@+id/LList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8"
@@ -42,21 +40,19 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/BReturn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:onClick="returnConnect"
-            android:text="Retour"
+            android:text="@string/B_Return"
             android:textSize="24sp" />
 
         <Button
-            android:id="@+id/BTransfer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:onClick="transfer"
-            android:text="Tranférer"
+            android:text="@string/B_Transfer"
             android:textSize="24sp" />
     </LinearLayout>
 

@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -86,11 +87,16 @@ public class InfoSended extends Activity {
         if (code == 200) {
             map = NfcFunctions.stringToMap(message);
 
-            Integer nb = 0;
+            if (map == null) {
+                Toast.makeText(this, "Bad Response", Toast.LENGTH_SHORT).show();
+                return ;
+            }
+
+            int nb = 0;
 
             for (String key : map.keySet()) {
                 for (String dKey : defaultmap.keySet()) {
-                    if (dKey == key && !map.get(key).equals(defaultmap.get(dKey))) {
+                    if (dKey.equals(key) && !Objects.equals(map.get(key), defaultmap.get(dKey))) {
                         nb += 1;
                     }
                 }
@@ -118,7 +124,7 @@ public class InfoSended extends Activity {
         startActivity(intent);
     }
 
-    public void postRequest(JSONObject postData) throws IOException {
+    private void postRequest(JSONObject postData) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         client.newCall(new MyJSONReq().postRequest(url, postData)).enqueue(new Callback() {
@@ -129,7 +135,7 @@ public class InfoSended extends Activity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 code = response.code();
                 message = response.message();
             }

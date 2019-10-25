@@ -28,7 +28,6 @@ public class NFCConnect extends Activity {
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
             finish();
-            return ;
         }
     }
 
@@ -48,7 +47,7 @@ public class NFCConnect extends Activity {
 
         try {
             ndefDetected.addDataType("text/plain");
-        } catch (IntentFilter.MalformedMimeTypeException e) { }
+        } catch (IntentFilter.MalformedMimeTypeException ignored) { }
 
         IntentFilter[] exchangeFilters = new IntentFilter[] { ndefDetected };
 

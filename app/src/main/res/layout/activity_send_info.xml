@@ -14,10 +14,10 @@
         android:id="@+id/IWireless"
         app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="36dp"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/B_CD_WirelessLogo" />
 
     <Button
-        android:id="@+id/BReturn"
         android:layout_width="121dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
@@ -25,7 +25,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:onClick="retour"
-        android:text="Retour"
+        android:text="@string/B_Return"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="8dp"
-        android:text="Nous avons envoyé vos informations."
+        android:text="@string/T_InfoSend"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="36sp"
@@ -54,7 +54,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="140dp"
         android:layout_marginEnd="8dp"
-        android:text="Récupérer les informations."
+        android:text="@string/B_Back"
         android:onClick="backInfo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -9,20 +9,20 @@
     android:background="@android:color/background_light">
 
     <Button
-        android:text="Deconnection"
+        android:text="@string/B_Deconect"
         android:layout_width="133dp"
         android:layout_height="40dp"
-        android:id="@+id/BDeconect" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
         android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/TName" app:layout_constraintVertical_bias="0.976"
         android:onClick="deconnection"/>
     <TextView
-        android:text="NFC"
+        android:text="@string/T_Nfc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="50dp"
+        android:textSize="50sp"
         android:id="@+id/TName" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
         app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
         android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
@@ -32,13 +32,14 @@
         android:id="@+id/IBComputer" android:layout_marginTop="116dp"
         app:layout_constraintTop_toBottomOf="@+id/TName"
         app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-        android:onClick="chooseComputer"/>
+        android:onClick="chooseComputer"
+        android:contentDescription="@string/CD_BComp" />
     <TextView
-        android:text="Choisissez votre plateforme"
+        android:text="@string/T_Choose"
         android:layout_width="wrap_content"
         android:layout_height="38dp"
-        android:textSize="25dp"
-        android:id="@+id/TChoose" android:layout_marginTop="120dp"
+        android:textSize="25sp"
+        android:layout_marginTop="120dp"
         app:layout_constraintTop_toBottomOf="@+id/IBComputer" android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.457"
         android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
@@ -47,9 +48,9 @@
     <ImageButton
         android:layout_width="111dp"
         android:layout_height="171dp" app:srcCompat="@drawable/logo_tel"
-        android:id="@+id/IBPhone"
         app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
         app:layout_constraintEnd_toStartOf="@+id/IBComputer" android:layout_marginEnd="8dp"
         android:layout_marginTop="128dp" app:layout_constraintTop_toBottomOf="@+id/TName"
-        app:layout_constraintHorizontal_bias="0.882" android:onClick="choosePortable"/>
+        app:layout_constraintHorizontal_bias="0.882" android:onClick="choosePortable"
+        android:contentDescription="@string/CD_BPhone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

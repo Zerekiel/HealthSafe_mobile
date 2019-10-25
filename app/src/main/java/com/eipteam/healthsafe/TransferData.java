@@ -62,7 +62,7 @@ public class TransferData extends AppCompatActivity {
 
         try {
             ndefDetected.addDataType("text/plain");
-        } catch (IntentFilter.MalformedMimeTypeException e) { }
+        } catch (IntentFilter.MalformedMimeTypeException ignored) { }
 
         IntentFilter[] exchangeFilters = new IntentFilter[] { ndefDetected };
 
@@ -78,6 +78,7 @@ public class TransferData extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
 
+        super.onNewIntent(intent);
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
             NdefMessage[] msgs = getNdefMessages(intent);
             detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
@@ -135,7 +136,7 @@ public class TransferData extends AppCompatActivity {
                 }).setNegativeButton("No", null).show();
     }
 
-    private boolean writeTag(NdefMessage message) {
+    private void writeTag(NdefMessage message) {
         int size = message.toByteArray().length;
 
         try {
@@ -145,16 +146,15 @@ public class TransferData extends AppCompatActivity {
                 ndef.connect();
                 if (!ndef.isWritable()) {
                     error(this, "Tag is read-only.");
-                    return false;
+                    return;
                 }
                 if (ndef.getMaxSize() < size) {
                     error(this, "Tag capacity is " + ndef.getMaxSize() + " bytes, message is " + size + " bytes.");
-                    return false;
+                    return;
                 }
 
                 ndef.writeNdefMessage(message);
                 toast(this, "Message was write successfully.");
-                return true;
             } else {
                 NdefFormatable format = NdefFormatable.get(detectedTag);
 
@@ -165,24 +165,20 @@ public class TransferData extends AppCompatActivity {
 
                         toast(this, "Message was write successfully.");
 
-                        return true;
                     } catch (IOException e) {
                         error(this, "Failed to format tag. " + e.getMessage());
-                        return false;
                     }
                 } else {
                     error(this, "Tag doesn't support NDEF.");
-                    return false;
                 }
             }
         } catch (Exception e) {
             error(this, "Failed to write Tag. " + e.getMessage());
         }
 
-        return  false;
     }
 
-    public void toast(Context context, String text) {
+    private void toast(Context context, String text) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 

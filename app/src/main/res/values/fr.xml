@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="B_Deconect">Déconnection</string>
+    <string name="T_Nfc">NFC</string>
+    <string name="CD_BComp">Bouton pour accéder à la partie ordinateur</string>
+    <string name="T_Choose">Choisissez votre plateforme</string>
+    <string name="CD_BPhone">Bouton pour accéder à la partie smartphone</string>
+    <string name="H_Value">Value</string>
+    <string name="B_Connect">Connection</string>
+    <string name="CD_IHealth">HealthSafe Logo</string>
+    <string name="H_Identifier">Identifiant</string>
+    <string name="H_Pass">Password</string>
+    <string name="T_MedicalStats">Infos médicales</string>
+    <string name="B_Return">Retour</string>
+    <string name="B_Transfer">Tranférer</string>
+    <string name="B_CD_WirelessLogo">Wireless Logo</string>
+    <string name="T_Wait">En attente d\'une puce NFC</string>
+    <string name="T_InfoSend">Nous avons envoyé vos informations</string>
+    <string name="B_Back">Récupérer les informations</string>
+</resources>

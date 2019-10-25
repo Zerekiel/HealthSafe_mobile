@@ -12,6 +12,7 @@ import com.eipteam.healthsafe.nfc_manager.display.ListElementAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class MedicalStats extends AppCompatActivity {
 
@@ -72,7 +73,7 @@ public class MedicalStats extends AppCompatActivity {
         int nbSame = 0;
 
         for (Element e : infos) {
-            if (defaultMap.get(getKeysId(e.getText())).equals(e.getEdit()) || (defaultMap.get(getKeysId(e.getText())).equals("N/A") && e.getEdit().equals("")))
+            if (Objects.equals(defaultMap.get(getKeysId(e.getText())), e.getEdit()) || (Objects.equals(defaultMap.get(getKeysId(e.getText())), "N/A") && e.getEdit().equals("")))
                 nbSame += 1;
             else {
                 if (e.getEdit().equals(""))

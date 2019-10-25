@@ -44,9 +44,7 @@ public class NfcFunctions {
 
         String[] records = datas.split("\n");
 
-        ArrayList<String> tmp = new ArrayList<>();
-
-        tmp.addAll(Arrays.asList(keys));
+        ArrayList<String> tmp = new ArrayList<>(Arrays.asList(keys));
 
         for (String rec : records) {
             if (!rec.contains(":"))
@@ -62,7 +60,7 @@ public class NfcFunctions {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (String s : map.keySet()) {
-            stringBuilder.append(s + ":" + map.get(s));
+            stringBuilder.append(s).append(":").append(map.get(s));
             stringBuilder.append("\n");
         }
 
