@@ -53,10 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         while (code == -2);
 
-        if (code == 200 || ("deprost".equals(id1) && "password".equals(id2))) {
+        if (code == 200) {
             identifiant.setText("");
             password.setText("");
-            //Toast.makeText(this, code + " -> " + msg, Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }
         else {
