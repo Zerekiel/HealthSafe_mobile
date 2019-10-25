@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+#accept licenses
+yes | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;28.0.3"
+
 ##############################################################################
 ##
 ##  Gradle start up script for UN*X
