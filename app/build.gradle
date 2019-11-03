@@ -43,9 +43,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: [
             '**/*EventType.*',
             '**/**Mocked'
     ]
-//    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
- //   def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-   // def mainSrc = "${project.projectDir}/src/main/java"
 
     def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/mycmsProd/debug", excludes: fileFilter)
     def mainSrc = files(["src/main/java","src/mycms/java"])
@@ -54,8 +51,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: [
     sourceDirectories = files([mainSrc])
     //Explain to Jacoco where are you .class file
     classDirectories = files([debugTree])
-
-//    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
 
     executionData = fileTree(dir: "$buildDir", includes: [
             "jacoco/testMycmsMockDebugUnitTest.exec",
