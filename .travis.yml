@@ -3,7 +3,7 @@ notifications:
 
 language: android
 android:
-  update_sdk: true
+#  update_sdk: true
   before_script:
     - chmod +x ./gradlew
   components:
