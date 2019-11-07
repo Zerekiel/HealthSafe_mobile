@@ -25,5 +25,6 @@ public class Hash {
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e);
         }
+        return null;
     }
 }
