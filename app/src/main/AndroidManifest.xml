@@ -36,5 +36,7 @@
         </activity>
         <activity android:name=".NFCConnectPC">
         </activity>
+        <activity android:name=".Profile">
+        </activity>
     </application>
 </manifest>
