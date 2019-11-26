@@ -1,5 +1,7 @@
 package com.eipteam.healthsafe;
 
+import android.util.Log;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
@@ -21,6 +23,7 @@ public class Hash {
             final MessageDigest digest = MessageDigest.getInstance("SHA256");
             final byte[] hashbytes = digest.digest(str.getBytes(StandardCharsets.UTF_8));
             String hashedStr = bytesToHex(hashbytes);
+            Log.d("HASHED STRING", hashedStr);
             return hashedStr;
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e);
