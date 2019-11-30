@@ -46,7 +46,7 @@ class GetBytesOfGeneratedSymmetricKey {
 
 public class HillCipher {
 
-    // create a matrix of size
+    // create a key matrix of size
     // (square_root(length_of_matrix)) * (length / square_root(length_of_matrix)
     public static int[][] create_key_matrix(String key) {
         int key_len = key.length();
@@ -64,6 +64,8 @@ public class HillCipher {
         return tab;
     }
 
+    // Add 0 at the end of matrix if message matrix is not a perfect square
+    // and matrix has been extended
     protected static String complete_matrix(String str, int length, char charToFill) {
         char[] array = new char[str.length() + length];
 
@@ -78,13 +80,14 @@ public class HillCipher {
         return new String(array);
     }
 
+    //create a message matrix of size perfect square matrix
     public static int[][] create_message_matrix(String message) {
         int msg_len = message.length();
         int old = msg_len;
-        // if message length is not a perfect square
+        // if message length is not a perfect square, enlarge size until perfect square len
         while (checkPerfectSquare(msg_len) == false) msg_len += 1;
         int diff = msg_len - old;
-        // enlarge message and fill with 00 to have a perfect square length
+        // fill with 00 end of matrix if matrix extended
         String adjusted_msg = complete_matrix(message, diff, '0');
 
         int x = (int)Math.sqrt(adjusted_msg.length());
@@ -101,65 +104,40 @@ public class HillCipher {
         return matrix;
     }
 
-    public static int[][] convertIntegers(List<Integer> integers)
-    {
-        int[][] ret = new int[integers.size()][];
-        for (int i=0; i < ret.length; i++)
-        {
-            for(int x = 0; x < 2; x++) {
-             //   ret[i] = integers.get(i).intValue();
-            }
-        }
-        return ret;
-    }
-    public static int[][] hill(int[][] key, int[] line) {
+    public static int[] hill(int[][] key, int[] line) {
         int len_line = line.length;
-
-/*
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        int val;
-        for (int y = 0; y < 2; y++) {
-            val = 0;
-            for(int x = 0; x < 2; x++) {
-                val += key[y][x] * line[x];
-            }
-            list.add(val % 127);
-        }
-        System.out.println("list size" + list.size());
-        System.out.println("LIST : " + list);
-*/
-
-
-
-        int[][] matrix_product = new int[len_line][len_line];
+        int[] matrix_product = new int[len_line];
         int prod;
         for (int y = 0; y < key.length; y++) {
             prod = 0;
             for(int x = 0; x < key.length; x++) {
                 prod += key[y][x] * line[x];
-                matrix_product[y][x] = prod % 127;
-                System.out.println(matrix_product[y][x]);
             }
+            matrix_product[y] = prod % 127;
         }
-
-
-        // int[] tab = convertIntegers(list);
-
         return matrix_product;
     }
 
-    public static void matrix_mult(int[][] key_matrix, int[][]message_matrix) {
+    public static int[][] matrix_mult(int[][] key_matrix, int[][]message_matrix) {
 
- //       matrix_msg_x = message_matrix[0].length;
-//        matrix_msg_y = message_matrix.length;
-//        int size = size_y + size_x;
-
-        for (int y = 1; y < message_matrix.length; y++) {
-//            matrix[y] = hill(key_matrix, message_matrix[y]);
-            hill(key_matrix, message_matrix[y]);
-
+        int[][] matrix = message_matrix;
+        for (int y = 0; y < message_matrix.length; y++) {
+            matrix[y] = hill(key_matrix, message_matrix[y]);
+            System.out.println("PROD MAT PROUT:"+ Arrays.toString(matrix[y]));
         }
-     //   return matrix;
+        return matrix;
+    }
+
+    static String getMeaning(int[][] matrix) {
+        String meaning = "";
+        char[][] mean = new char[matrix.length][matrix.length];
+        for (int y = 0; y < matrix.length; y++) {
+            for (int x = 0; x < matrix.length; x++) {
+                mean[y][x] = (char)matrix[y][x];
+                meaning += mean[y][x];
+            }
+        }
+        return meaning;
     }
 
     static boolean checkPerfectSquare(double x)
@@ -185,7 +163,9 @@ public class HillCipher {
 //        String key = GetBytesOfGeneratedSymmetricKey.keyGen();
         int[][] key_matrix = create_key_matrix(key);
         int[][] message_matrix = create_message_matrix(message);
-        matrix_mult(key_matrix, message_matrix);
+        int[][] matrix_product = matrix_mult(key_matrix, message_matrix);
+        String encryoted = getMeaning(matrix_product);
+        System.out.println(encryoted);
         return 0;
     }
 }
