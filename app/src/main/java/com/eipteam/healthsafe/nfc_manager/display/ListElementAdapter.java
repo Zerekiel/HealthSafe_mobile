@@ -1,11 +1,16 @@
 package com.eipteam.healthsafe.nfc_manager.display;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.eipteam.healthsafe.R;
 
@@ -45,32 +50,91 @@ public class ListElementAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             newView = inflater.inflate(R.layout.activity_custom_listview, parent, false);
             holder = new ListElementHolder();
-            holder.text = newView.findViewById(R.id.txView);
-            holder.edit = newView.findViewById(R.id.edText);
+            holder.label = newView.findViewById(R.id.labelText);
+            holder.data = newView.findViewById(R.id.dataText);
+            holder.edit = newView.findViewById(R.id.editButton);
+            holder.delete = newView.findViewById(R.id.deleteButton);
+
             newView.setTag(holder);
         } else {
             holder = (ListElementHolder) newView.getTag();
         }
 
-        holder.text.setText(listElem.get(position).getText());
-        holder.text.setId(position);
+        holder.label.setText(listElem.get(position).getText());
+        holder.label.setId(position);
 
-        if (listElem.get(position).getEdit().equals("N/A"))
-            listElem.get(position).setEdit("");
-        holder.edit.setText(listElem.get(position).getEdit());
+        if (listElem.get(position).getData().equals("N/A"))
+            listElem.get(position).setData("");
+        holder.data.setText(listElem.get(position).getData());
+        holder.data.setId(position);
+
         holder.edit.setId(position);
-
-        holder.edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        holder.delete.setId(position);
+/*
+        holder.data.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!listElem.isEmpty()) {
                     final int position = v.getId();
                     final EditText Caption = (EditText) v;
-                    listElem.get(position).setEdit(Caption.getText().toString());
+                    listElem.get(position).setData(Caption.getText().toString());
                     notifyDataSetChanged();
                 }
             }
         });
+*/
+
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!listElem.isEmpty()) {
+                    final int position = v.getId();
+                    String caption = listElem.get(position).getData();
+                    final EditText input = new EditText(context);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    input.setLayoutParams(lp);
+                    input.setText(caption);
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    alert.setTitle("EDIT");
+                    alert.setMessage("Enter new value:");
+                    alert.setView(input);
+                    alert.setIcon(R.drawable.ic_edit_24px);
+
+                    alert.setPositiveButton("DONE", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            listElem.get(position).setData(input.getText().toString());
+                        }
+                    });
+
+                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    alert.show();
+
+                    notifyDataSetChanged();
+                }
+            }
+        });
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!listElem.isEmpty()) {
+                    final int position = v.getId();
+                    listElem.get(position).setData("");
+                    notifyDataSetChanged();
+                }
+            }
+        });
+
 
         return newView;
     }
