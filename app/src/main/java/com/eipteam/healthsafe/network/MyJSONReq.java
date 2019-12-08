@@ -2,6 +2,9 @@ package com.eipteam.healthsafe.network;
 
 import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.CacheControl;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;

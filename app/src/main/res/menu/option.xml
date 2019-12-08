@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/itemLang"
-        android:title="Language"
+        android:title="Langages "
         app:showAsAction="never">
         <menu>
             <item android:id="@+id/subEN"
                 android:title="English"/>
             <item android:id="@+id/subFR"
-                android:title="French"/>
+                android:title="Français"/>
         </menu>
     </item>
 
     <item android:id="@+id/itemProf"
-        android:title="Profile"
+        android:title="Profil"
         app:showAsAction="never"/>
 </menu>

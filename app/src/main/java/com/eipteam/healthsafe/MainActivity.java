@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,14 +16,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private OkHttpClient client = new OkHttpClient();
     private Integer code = -2;
     private String msg = null;
 
@@ -56,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         if (code == 200) {
             identifiant.setText("");
             password.setText("");
+            code = -3;
             startActivity(intent);
         }
         else {
@@ -64,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void postRequest(String login, String pass) throws IOException {
-        OkHttpClient client = new OkHttpClient();
-
         JSONObject postData = new JSONObject();
         try {
             postData.put("userName", login);
@@ -74,8 +78,10 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        String url = getResources().getString(R.string.connection);
+        Log.d("AAAAAAAAAAAAAAAAAAAAAAAaa", login);
+        Log.d("BBBBBBBBBBBBBBBBBBBBBBBB", pass);
 
+        String url = getResources().getString(R.string.connection);
         client.newCall(new MyJSONReq().postRequest(url, postData)).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -84,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call call, Response response) throws IOException {
                 code = response.code();
             }
         });
