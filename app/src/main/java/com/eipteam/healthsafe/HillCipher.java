@@ -1,9 +1,10 @@
 package com.eipteam.healthsafe;
 
+import android.util.Log;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -39,9 +40,7 @@ class GetBytesOfGeneratedSymmetricKey {
             System.out.println("No Such Algorithm:" + e.getMessage());
             return null;
         }
-
     }
-
 }
 
 public class HillCipher {
@@ -123,12 +122,11 @@ public class HillCipher {
         int[][] matrix = message_matrix;
         for (int y = 0; y < message_matrix.length; y++) {
             matrix[y] = hill(key_matrix, message_matrix[y]);
-            System.out.println("PROD MAT PROUT:"+ Arrays.toString(matrix[y]));
         }
         return matrix;
     }
 
-    static String getMeaning(int[][] matrix) {
+    static String get_meaning(int[][] matrix) {
         String meaning = "";
         char[][] mean = new char[matrix.length][matrix.length];
         for (int y = 0; y < matrix.length; y++) {
@@ -154,7 +152,93 @@ public class HillCipher {
         return ((sq - Math.floor(sq)) == 0);
     }
 
-    public static int main(String message) {
+    public static int get_delta(int[][] key) {
+        int size = key.length;
+
+        if (size == 2) {
+            int val;
+            //calculate the delta
+            val = (key[0][0] * key[1][1]) - (key[0][1] * key[1][0]);
+            val = ((val % 127) + 127) %127;
+            System.out.println("DELTA : " + val);
+            int delta = 0;
+            for (int idx = 0; idx < 1000; idx++) {
+                delta = val * idx;
+                // get the inverse delta to multiply with the adjugate matrix of the key
+                if (((delta % 127) + 127) % 127 == 1) return idx;
+            }
+
+        }
+        else if (size == 3) {
+            int x=key[0][0]*((key[1][1]*key[2][2])-(key[2][1]*key[1][2]));
+            int y=-key[0][1]*((key[0][1]*key[2][2])-(key[2][0]*key[1][2]));
+            int z=key[0][2]*((key[1][0]*key[2][1])-(key[1][1]*key[2][0]));
+
+            int r=x+y+z;
+            return r;
+        }
+        return 0;
+    }
+
+    public static int[][] get_cofactor(int[][] key) {
+        int[][] cofactor_matrix = new int[key.length][key.length];
+
+        cofactor_matrix[0][0] = (Math.abs(key[1][2]) * Math.abs(key[2][1]) - Math.abs(key[1][1]) * Math.abs(key[2][2]));
+        cofactor_matrix[0][1] = -((Math.abs(key[1][0]) * Math.abs(key[2][2])) - (Math.abs(key[2][0]) * Math.abs(key[1][2])));
+        cofactor_matrix[0][2] = (Math.abs(key[1][0]) * Math.abs(key[2][1])) - (Math.abs(key[2][0]) * Math.abs(key[1][1]));
+        cofactor_matrix[1][0] = -((Math.abs(key[0][1]) * Math.abs(key[2][2])) - Math.abs((key[2][1]) * Math.abs(key[0][2])));
+        cofactor_matrix[1][1] = (Math.abs(key[0][0]) * Math.abs(key[2][2])) - (Math.abs(key[2][0]) * Math.abs(key[0][2]));
+        cofactor_matrix[1][2] = -((Math.abs(key[0][0]) * Math.abs(key[2][1])) - (Math.abs(key[2][0]) * Math.abs(key[0][1])));
+        cofactor_matrix[2][0] = (Math.abs(key[0][1]) * Math.abs(key[1][2])) - (Math.abs(key[1][1]) * Math.abs(key[0][2]));
+        cofactor_matrix[2][1] = -((Math.abs(key[0][0]) * Math.abs(key[1][2])) - (Math.abs(key[1][0]) * Math.abs(key[0][2])));
+        cofactor_matrix[2][2] = (Math.abs(key[0][0]) * Math.abs(key[1][1])) - (Math.abs(key[1][0]) * Math.abs(key[0][1]));
+
+
+        System.out.println(cofactor_matrix[0][0]);
+        System.out.println(cofactor_matrix[0][1]);
+        System.out.println(cofactor_matrix[0][2]);
+        System.out.println(cofactor_matrix[1][0]);
+        System.out.println(cofactor_matrix[1][1]);
+        System.out.println(cofactor_matrix[1][2]);
+        System.out.println(cofactor_matrix[2][0]);
+        System.out.println(cofactor_matrix[2][1]);
+        System.out.println(cofactor_matrix[2][2]);
+
+
+        return cofactor_matrix;
+    }
+
+    public static int[][] get_adj(int[][] key) {
+        int size = key.length;
+        int[][] tab = new int[size][size];
+
+        if (size == 2) {
+            tab[0][0] = key[1][1];
+            tab[0][1] = ((-key[0][1] % 127) + 127) % 127;
+            tab[1][0] = ((-key[1][0] % 127) + 127) % 127;
+            tab[1][1] = key[0][0];
+        } else if (size == 3) {
+            // get inverse of key
+            tab = get_cofactor(key);
+            // calcul the cofactor of each elem of matrix
+            // invert the row and col of this matrix
+            // inverse of the matrix :
+            ;
+        }
+        return (tab);
+    }
+
+    public static int[][] multiply(int[][]adj, int delta) {
+        int[][] tab = new int[adj.length][adj.length];
+        for (int y = 0; y < adj.length; y++) {
+            for (int x = 0; x < adj.length; x++) {
+                tab[y][x] = Math.round(((adj[y][x] * delta) % 127));
+            }
+        }
+        return tab;
+    }
+
+    public static int encrypt(String message) {
         String key ="abcd";
         if (!checkPerfectSquare(key.length())) {
             System.out.println("WRONG KEY : length of the key should be a perfect square root");
@@ -164,8 +248,32 @@ public class HillCipher {
         int[][] key_matrix = create_key_matrix(key);
         int[][] message_matrix = create_message_matrix(message);
         int[][] matrix_product = matrix_mult(key_matrix, message_matrix);
-        String encryoted = getMeaning(matrix_product);
+        String encryoted = get_meaning(matrix_product);
         System.out.println(encryoted);
+        return 0;
+    }
+
+
+    public static int decrypt(String message) {
+        String key ="totototot";
+        if (!checkPerfectSquare(key.length())) {
+            System.out.println("WRONG KEY : length of the key should be a perfect square root");
+            return 1;
+        }
+        // String key = GetBytesOfGeneratedSymmetricKey.keyGen();
+        int[][] key_matrix = create_key_matrix(key);
+        int [][] message_matrix = create_message_matrix(message);
+        // calculate the delta from the key matrix
+        int delta = get_delta(key_matrix);
+        //  get the adjugate matrix of the key
+        int[][] adj_matrix = get_adj(key_matrix);
+        // multiply the adjugate matrix with the delta to obtain the inverse matrix of the key
+        adj_matrix = multiply(adj_matrix, delta);
+
+        // multiply the invert key and the encrypted message to obtain the decrypted message
+        int[][] mult_matrix = matrix_mult(adj_matrix, message_matrix);
+        String decrypt = get_meaning(mult_matrix);
+        System.out.println(decrypt);
         return 0;
     }
 }
