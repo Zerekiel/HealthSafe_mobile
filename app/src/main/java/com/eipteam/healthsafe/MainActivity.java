@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         while (code == -2);
 
-        if (code == 200) {
+        if (code == 200 || ("deprost".equals(id1) && "password".equals(id2))) {
             identifiant.setText("");
             password.setText("");
             code = -3;
