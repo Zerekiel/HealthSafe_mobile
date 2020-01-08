@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         if (code == 200 || ("deprost".equals(id1) && "password".equals(id2))) {
             identifiant.setText("");
             password.setText("");
-            code = -3;
+            code = -2;
             startActivity(intent);
         }
         else {
@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Log.d("AAAAAAAAAAAAAAAAAAAAAAAaa", login);
-        Log.d("BBBBBBBBBBBBBBBBBBBBBBBB", pass);
 
         String url = getResources().getString(R.string.connection);
         client.newCall(new MyJSONReq().postRequest(url, postData)).enqueue(new Callback() {

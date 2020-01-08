@@ -24,4 +24,13 @@ public class MyJSONReq {
 
         return (request);
     }
+
+    public Request getRequest(String url) {
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        return (request);
+    }
 }

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">HealthSafe</string>
     <string name="connection">https://healthsafe-api.herokuapp.com/api/signin</string>
@@ -36,21 +37,21 @@
         <item>Regular doctor name</item>
     </string-array>
 
-    <string name="B_Deconect">Déconnection</string>
+    <string name="B_Deconect">Deconnection</string>
     <string name="T_Nfc">NFC</string>
-    <string name="CD_BComp">Bouton pour accéder à la partie ordinateur</string>
-    <string name="T_Choose">Choisissez votre plateforme</string>
-    <string name="CD_BPhone">Bouton pour accéder à la partie smartphone</string>
-    <string name="H_Value">Valeur</string>
-    <string name="B_Connect">Connexion</string>
-    <string name="CD_IHealth">Logo HealthSafe</string>
-    <string name="H_Identifier">Identifiant</string>
-    <string name="H_Pass">Mot de passe</string>
-    <string name="T_MedicalStats">Infos médicales</string>
-    <string name="B_Return">Retour</string>
-    <string name="B_Transfer">Tranférer</string>
-    <string name="B_CD_WirelessLogo">Logo Wifi</string>
-    <string name="T_Wait">En attente d\'une puce NFC</string>
-    <string name="T_InfoSend">Nous avons envoyé vos informations</string>
-    <string name="B_Back">Récupérer les informations</string>
+    <string name="CD_BComp">Access button for computer part</string>
+    <string name="T_Choose">Choose your platform</string>
+    <string name="CD_BPhone">Access button for phone part</string>
+    <string name="H_Value">Value</string>
+    <string name="B_Connect">Connection</string>
+    <string name="CD_IHealth">HealthSafe Logo</string>
+    <string name="H_Identifier">Identifier</string>
+    <string name="H_Pass">Password</string>
+    <string name="T_MedicalStats">Medic Infos</string>
+    <string name="B_Return">Return</string>
+    <string name="B_Transfer">Tranfer</string>
+    <string name="B_CD_WirelessLogo">Wireless Logo</string>
+    <string name="T_Wait">Waiting NFC device</string>
+    <string name="T_InfoSend">We sent your informations</string>
+    <string name="B_Back">Get back informations</string>
 </resources>
