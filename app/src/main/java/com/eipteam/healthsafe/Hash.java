@@ -23,8 +23,15 @@ public class Hash {
             final MessageDigest digest = MessageDigest.getInstance("SHA256");
             final byte[] hashbytes = digest.digest(str.getBytes(StandardCharsets.UTF_8));
             String hashedStr = bytesToHex(hashbytes);
-            Log.d("HASHED STRING", hashedStr);
-            return hashedStr;
+
+            final MessageDigest dig = MessageDigest.getInstance("SHA3_256");
+            final byte[] hashbytes2 = dig.digest(
+                    hashedStr.getBytes(StandardCharsets.UTF_8));
+            String sha3_256hex = bytesToHex(hashbytes2);
+            Log.d("HASHED STRING", sha3_256hex);
+            //return hashedStr;
+            return sha3_256hex;
+
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e);
         }
