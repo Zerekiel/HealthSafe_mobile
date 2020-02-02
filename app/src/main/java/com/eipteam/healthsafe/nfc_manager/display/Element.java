@@ -1,23 +1,23 @@
 package com.eipteam.healthsafe.nfc_manager.display;
 
 public class Element {
-    private final String text;
-    private String edit;
+    private final String label;
+    private String data;
 
-    public Element (String _text, String _edit) {
-        text = _text;
-        edit = _edit;
+    public Element (String _label, String _data) {
+        label = _label;
+        data = _data;
     }
 
     public String getText() {
-        return text;
+        return label;
     }
 
-    public String getEdit() {
-        return edit;
+    public String getData() {
+        return data;
     }
 
-    public void setEdit(String _edit) {
-        edit = _edit;
+    public void setData(String _data) {
+        data = _data;
     }
 }
