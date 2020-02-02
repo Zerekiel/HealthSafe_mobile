@@ -73,13 +73,13 @@ public class MedicalStats extends AppCompatActivity {
         int nbSame = 0;
 
         for (Element e : infos) {
-            if (Objects.equals(defaultMap.get(getKeysId(e.getText())), e.getEdit()) || (Objects.equals(defaultMap.get(getKeysId(e.getText())), "N/A") && e.getEdit().equals("")))
+            if (Objects.equals(defaultMap.get(getKeysId(e.getText())), e.getData()) || (Objects.equals(defaultMap.get(getKeysId(e.getText())), "N/A") && e.getData().equals("")))
                 nbSame += 1;
             else {
-                if (e.getEdit().equals(""))
+                if (e.getData().equals(""))
                     map.put(getKeysId(e.getText()), "N/A");
                 else
-                    map.put(getKeysId(e.getText()), e.getEdit());
+                    map.put(getKeysId(e.getText()), e.getData());
             }
         }
 
