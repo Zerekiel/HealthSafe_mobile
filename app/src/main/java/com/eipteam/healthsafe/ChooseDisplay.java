@@ -50,7 +50,7 @@ public class ChooseDisplay extends AppCompatActivity {
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
         conf.setLocale(new Locale(locale.toLowerCase()));
-        res.updateConfiguration(conf, dm);
+        //res.updateConfiguration(conf, dm);
     }
 
     public void choosePortable(View view) {
