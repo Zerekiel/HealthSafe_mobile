@@ -43,7 +43,12 @@ public class NFCConnectPC extends AppCompatActivity {
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        if (nfcAdapter != null && !nfcAdapter.isEnabled()) {
+        if (nfcAdapter == null) {
+            Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        if (!nfcAdapter.isEnabled()) {
             showWirelessSettings();
         }
 
@@ -94,10 +99,10 @@ public class NFCConnectPC extends AppCompatActivity {
             tmpIntent.putExtra("Infos", "NULL");
             TransferData.error(this, "Not good format.");
 
-            HashMap<String, String> map = new HashMap<>();
+            /*HashMap<String, String> map = new HashMap<>();
             for (String s : getResources().getStringArray(R.array.medical_informations)) {
                 map.put(s, "N/A");
-            }
+            }*/
 
             startActivity(tmpIntent);
         } else {

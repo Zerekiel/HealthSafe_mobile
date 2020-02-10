@@ -8,9 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.eipteam.healthsafe.R;
 
@@ -70,19 +68,6 @@ public class ListElementAdapter extends BaseAdapter {
 
         holder.edit.setId(position);
         holder.delete.setId(position);
-/*
-        holder.data.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!listElem.isEmpty()) {
-                    final int position = v.getId();
-                    final EditText Caption = (EditText) v;
-                    listElem.get(position).setData(Caption.getText().toString());
-                    notifyDataSetChanged();
-                }
-            }
-        });
-*/
 
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
