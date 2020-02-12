@@ -16,14 +16,10 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.mockito.Mockito.spy;
-
 @Config(sdk = Build.VERSION_CODES.O_MR1)
 
 @RunWith(RobolectricTestRunner.class)
-//@PrepareForTest({ ReportFragment.class })
 public class MainActivityUnitTest extends TestCase {
-  private Application context;
   private MainActivity ma;
   private ChooseDisplay cd;
 
@@ -42,8 +38,7 @@ public class MainActivityUnitTest extends TestCase {
 
     @Test
     public void testOnCreate() {
-        MainActivity spyma = spy(new MainActivity());
-        Button btn = (Button) ma.findViewById(R.id.Tconnexion);
+        Button btn = ma.findViewById(R.id.Tconnexion);
         assertNotNull(ma);
         btn.getAccessibilityClassName();
         int id = btn.getId();
@@ -56,6 +51,5 @@ public class MainActivityUnitTest extends TestCase {
         PersistableBundle pb = new PersistableBundle();
         ma.onSaveInstanceState(b, pb);
         assertNotNull(ma);
-
         }
 }
