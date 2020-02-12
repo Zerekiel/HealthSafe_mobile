@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.bouncycastle:bcprov-jdk14:1.58@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk14/1.58/ecc7430586e421cffb75029d2beb1e1781b82284/bcprov-jdk14-1.58.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk14/1.58/b61d6152dcea6892ef2719d6a26df50333a01950/bcprov-jdk14-1.58-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk14/1.58/97373d3169c55dd4873880e8921087f7bfc5db81/bcprov-jdk14-1.58-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
